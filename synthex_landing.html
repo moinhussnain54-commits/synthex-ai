@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synthex — AI Automation Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0a0a0a;
+    --ink2: #3a3a3a;
+    --muted: #888;
+    --accent: #1a1aff;
+    --accent2: #00c9a7;
+    --bg: #f5f4f0;
+    --card: #ffffff;
+    --border: rgba(0,0,0,0.1);
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 3rem; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: -0.03em; color: var(--ink); }
+  .logo span { color: var(--accent); }
+  .nav-cta { background: var(--ink); color: #fff; border: none; padding: 0.55rem 1.3rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--accent); }
+
+  .hero { padding: 6rem 3rem 4rem; max-width: 900px; margin: 0 auto; text-align: center; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; background: #e8e8ff; color: var(--accent); font-size: 0.78rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 2rem; letter-spacing: 0.04em; }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 1.4rem; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub { font-size: 1.05rem; color: var(--ink2); max-width: 540px; margin: 0 auto 2.8rem; line-height: 1.7; font-weight: 300; }
+
+  .waitlist-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2.2rem 2.5rem; max-width: 480px; margin: 0 auto; box-shadow: 0 2px 40px rgba(0,0,0,0.06); }
+  .wl-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .wl-sub { font-size: 0.83rem; color: var(--muted); margin-bottom: 1.4rem; }
+  .input-row { display: flex; gap: 10px; }
+  .wl-input { flex: 1; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: var(--bg); color: var(--ink); outline: none; transition: border 0.2s; }
+  .wl-input:focus { border-color: var(--accent); }
+  .wl-btn { background: var(--accent); color: #fff; border: none; padding: 0.75rem 1.4rem; border-radius: 12px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: background 0.2s, transform 0.1s; }
+  .wl-btn:hover { background: #0000cc; }
+  .wl-btn:active { transform: scale(0.97); }
+  .wl-count { margin-top: 1rem; font-size: 0.8rem; color: var(--muted); text-align: center; }
+  .wl-count strong { color: var(--ink); }
+  .success-msg { display: none; text-align: center; padding: 1rem; }
+  .success-msg p { font-size: 0.9rem; color: var(--ink2); }
+
+  .marquee-wrap { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0.9rem 0; margin: 4rem 0; background: var(--ink); }
+  .marquee { display: flex; gap: 3rem; white-space: nowrap; animation: scroll 20s linear infinite; }
+  @keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .marquee span { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; }
+  .marquee span.lit { color: var(--accent2); }
+
+  .section { padding: 0 3rem 5rem; max-width: 1000px; margin: 0 auto; }
+  .section-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 2.5rem; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; transition: box-shadow 0.2s, transform 0.2s; }
+  .card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .card-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; font-size: 1.3rem; }
+  .c1{background:#e8e8ff} .c2{background:#e0faf4} .c3{background:#fff3e0} .c4{background:#fce4ec}
+  .card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { font-size: 0.85rem; color: var(--ink2); line-height: 1.6; font-weight: 300; }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; margin-top: 2rem; }
+  .step { padding: 1.5rem; position: relative; }
+  .step-num { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: rgba(0,0,0,0.06); line-height: 1; margin-bottom: 0.8rem; }
+  .step h4 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .step p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  .step:not(:last-child)::after { content: '→'; position: absolute; right: -8px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--border); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  footer p { font-size: 0.8rem; color: var(--muted); }
+  footer strong { color: var(--ink); font-family: 'Syne', sans-serif; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Synth<span>ex</span></div>
+  <button class="nav-cta" onclick="document.getElementById('wl').scrollIntoView({behavior:'smooth'})">Join waitlist</button>
+</nav>
+
+<section class="hero">
+  <div class="badge"><span class="badge-dot"></span> Now accepting early access</div>
+  <h1>AI automation that <em>works</em> while you sleep</h1>
+  <p class="hero-sub">Synthex deploys intelligent workflows that obliterate repetitive tasks — letting your team focus on work that actually matters.</p>
+
+  <div class="waitlist-box" id="wl">
+    <div id="wl-form-content">
+      <div class="wl-title">Get early access</div>
+      <div class="wl-sub">Join 200+ founders already on the list. No spam, ever.</div>
+      <div class="input-row">
+        <input class="wl-input" type="email" id="emailInput" placeholder="your@email.com" />
+        <button class="wl-btn" onclick="joinWaitlist()">Join →</button>
+      </div>
+      <div class="wl-count">Already joined: <strong id="countNum">247</strong> people</div>
+    </div>
+    <div class="success-msg" id="success-msg">
+      <p style="font-size:2rem">🎉</p>
+      <p><strong>You're on the list!</strong><br>We'll reach out when your spot opens.</p>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="lit">AI Automation</span><span>·</span>
+    <span>Lead Generation</span><span>·</span>
+    <span class="lit">Smart Workflows</span><span>·</span>
+    <span>Email Sequences</span><span>·</span>
+    <span class="lit">CRM Integration</span><span>·</span>
+    <span>Data Pipelines</span><span>·</span>
+    <span class="lit">AI Chatbots</span><span>·</span>
+    <span>Process Mining</span><span>·</span>
+    <span class="lit">AI Automation</span><span>·</span>
+    <span>Lead Generation</span><span>·</span>
+    <span class="lit">Smart Workflows</span><span>·</span>
+    <span>Email Sequences</span><span>·</span>
+    <span class="lit">CRM Integration</span><span>·</span>
+    <span>Data Pipelines</span><span>·</span>
+    <span class="lit">AI Chatbots</span><span>·</span>
+    <span>Process Mining</span><span>·</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">What we do</div>
+  <div class="section-title">One platform. Total automation.</div>
+  <div class="cards">
+    <div class="card"><div class="card-icon c1">⚡</div><h3>Workflow automation</h3><p>Eliminate tedious, repetitive processes with AI agents that operate autonomously around the clock.</p></div>
+    <div class="card"><div class="card-icon c2">🔗</div><h3>Seamless integration</h3><p>Connect your existing tools — CRM, email, Slack, spreadsheets — without writing a single line of code.</p></div>
+    <div class="card"><div class="card-icon c3">🧠</div><h3>Intelligent outreach</h3><p>AI-crafted, hyper-personalized messages sent at the optimal moment to maximize conversion.</p></div>
+    <div class="card"><div class="card-icon c4">📊</div><h3>Real-time analytics</h3><p>Granular dashboards that surface actionable insights — not vanity metrics — to drive decisions.</p></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">How it works</div>
+  <div class="section-title">Up and running in 3 steps</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><h4>Audit your workflow</h4><p>We map your existing processes and identify the highest-leverage automation opportunities.</p></div>
+    <div class="step"><div class="step-num">02</div><h4>Deploy AI agents</h4><p>Custom-built agents are deployed into your stack — zero disruption, maximum impact.</p></div>
+    <div class="step"><div class="step-num">03</div><h4>Scale effortlessly</h4><p>Watch your team's capacity multiply as Synthex handles the mundane at machine speed.</p></div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Synthex</strong> — AI Automation Agency</p>
+  <p>© 2025 Synthex. All rights reserved.</p>
+</footer>
+
+<script>
+  function joinWaitlist() {
+    const email = document.getElementById('emailInput').value;
+    if (!email || !email.includes('@')) {
+      document.getElementById('emailInput').style.borderColor = '#ff4444';
+      setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 1500);
+      return;
+    }
+    document.getElementById('wl-form-content').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  }
+</script>
+</body>
+</html>
